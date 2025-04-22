@@ -4,7 +4,7 @@
   "description": "Git Hub Action Mini Project 1",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Tests passed!\" && exit 0"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,9 @@
   "homepage": "https://github.com/Timipah-Ozori/GitHubAct1#readme",
   "dependencies": {
     "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.1.0"
   }
 }

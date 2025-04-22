@@ -8,7 +8,11 @@ app.get('/', (req, res) => {
 });
 
 // Start the server
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
+const server = app.listen(port, () => {
+  if (process.env.NODE_ENV !== 'test') { // Don't log during tests
+    console.log(`Server is running at http://localhost:${port}`);
+  }
 });
+
+module.exports = { app, server }; // Export both app and server
 
