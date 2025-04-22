@@ -1,0 +1,49 @@
+# Name of the workflow
+name: Node.js CI
+
+# Specifies when the workflow should be triggered
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+# Defines the jobs that the workflow will execute
+jobs:
+  build:
+    # Use the latest Ubuntu runner
+    runs-on: ubuntu-latest
+
+    # Matrix strategy to test multiple Node.js versions
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+      # Check out the code
+      - uses: actions/checkout@v3
+
+      # Set up Node.js based on the matrix version
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      # Cache npm dependencies
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # Install dependencies
+      - run: npm ci
+
+      # Run build script if it exists
+      - run: npm run build --if-present
+
+      # Run tests
+      - run: npm test
+
