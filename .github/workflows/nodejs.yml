@@ -1,3 +1,4 @@
+[16.x]
 # Name of the workflow
 name: Node.js CI
 
@@ -17,7 +18,7 @@ jobs:
     # Matrix strategy to test multiple Node.js versions
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [16.x, 18.x]
 
     steps:
       # Check out the code
@@ -47,3 +48,4 @@ jobs:
       # Run tests
       - run: npm test
 
+  
